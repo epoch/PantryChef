@@ -1,6 +1,6 @@
 
 <div class="blue">
-	<% if logged_in? %>
+	
 
 
 
@@ -15,6 +15,8 @@
 	<!-- Name & Source -->
 	<h1><%= @recipe['name']  %></h1>
 	<p id="recipe-source"><%= @recipe['source']['sourceDisplayName']  %></p>
+
+	<% if logged_in? %>
 		<% if current_user.recipes.where('yummly_id' => @recipe_id).empty? %>
 			<p><%= link_to 'Save Recipe', save_recipe_path(@recipe['id'])  %></p>
 		<% else %>
