@@ -1,0 +1,11 @@
+<div class="page-center">
+	<h1>Edit Note</h1>
+	
+	<%= form_tag recipe_create_note_path do %>
+	  <%= label_tag :notes, "Add notes:" %><br>
+	  <%= text_area_tag :notes, @selected_recipe.notes, size: "25x8" %>
+	  <%= hidden_field_tag :recipe_id, @recipe_id  %><br>
+	
+	  <%= submit_tag("Update Note") %>
+	<% end %>
+</div>

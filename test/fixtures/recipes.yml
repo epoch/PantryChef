@@ -1,0 +1,36 @@
+# == Schema Information
+#
+# Table name: recipes
+#
+#  id          :integer          not null, primary key
+#  name        :string(255)
+#  course      :string(255)
+#  cooktime    :integer
+#  rating      :integer
+#  ingredients :string(255)
+#  directions  :string(255)
+#  notes       :string(255)
+#  created_at  :datetime
+#  updated_at  :datetime
+#  image_url   :string(255)
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  course: MyString
+  cooktime: 1
+  rating: 1
+  ingredients: MyString
+  directions: MyString
+  notes: MyString
+
+two:
+  name: MyString
+  course: MyString
+  cooktime: 1
+  rating: 1
+  ingredients: MyString
+  directions: MyString
+  notes: MyString

@@ -1,0 +1,49 @@
+<div class="page-header">
+	<p>Recipes that use: <%= @ingredients.join(', ') %></p>
+	<p><% if @allergy.empty? == false %> Diet: <%= @allergy %> <% end %></p>
+</div>
+
+<div class="container" id="matches">
+	<% if @total_match_count == 0 %>
+		<p> No Matches Found. <%= link_to 'Search', root_path  %> again?</p>
+	<% else %>
+
+		<% @matches.each do |recipe|%>
+
+			<div class="col-md-3">
+			  <div class="thumbnail">
+					<img class="thumbnail" src=<%= recipe['imageUrlsBySize']['90'] %> >
+					<div class="caption">
+						<p><%= link_to recipe['recipeName'], recipe_path(recipe['id']), params: recipe['id'] %></p>
+						<p>Source: <%= recipe['sourceDisplayName'] %></p>
+						<p>Rating: <%= recipe['rating']  %>
+							
+						</p>
+						<p>Cook time: <%= recipe["totalTimeInSeconds"].to_i / 60 %> minutes</p>
+						<p>Course: <% if recipe['attributes']['course'] == nil %>
+												---
+											<% else %>
+												<%= recipe['attributes']['course'].first %>
+											<% end %>
+						</p>
+
+						<% @ingredients.each do |user_ing| %>
+							<% @missing = recipe['ingredients'].delete_if {|recipe_ing| recipe_ing.include? user_ing } %>
+						<% end %>
+						
+						<p>You need <%= @missing.length %>  more ingredients <span class="caret"></span></p> 
+						<p id="missing"> <%=  @missing.join(', ') %></p>
+
+						<script>
+						$( "p" ).unbind().on('click','span', function() {
+						  $(this).parent().parent().find( "#missing" ).toggle( "slow" );
+						});
+						</script>
+						
+					</div>
+				</div>
+			</div>	
+		<% end %>
+	<% end %>
+
+</div>

@@ -1,0 +1,13 @@
+
+<div class="saved-r">
+	<h1><%= @recipe_box.name %> Recipes</h1>
+	
+	<% @recipe_box.recipes.each do |recipe|%>
+	
+		<img src=<%= recipe.image_url  %> >
+		<%= link_to recipe.name, recipe_path(recipe.yummly_id)  %>
+	
+	<% end %>
+	
+	<p><%= link_to 'Back', :back  %></p>
+</div>

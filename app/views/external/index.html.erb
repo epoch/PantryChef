@@ -1,0 +1,27 @@
+<div class="external-top">
+	
+	<% if logged_in? %>
+	
+	<div class="pull-right" id="externalsave">	<% if current_user.recipes.where('yummly_id' => @recipe_id).empty? %>
+			<p><%= link_to 'Save Recipe', save_recipe_path(@recipe['id'])  %></p>
+		<% else %>
+			<p>Recipe already saved</p>
+		<% end %>
+	
+	<% else %>
+	
+		<p>You need to log in to save this recipe</p>
+	
+	<% end %>
+	</div>
+	
+<div class="pull-left" id="external-back">
+	<p><%= link_to 'Back', :back  %></p>
+</div>
+</div>
+
+
+
+<div class="external_div">	
+	<iframe height="100%" width="100%" src= <%= @external_url  %> >" width="100%"></iframe>
+</div>

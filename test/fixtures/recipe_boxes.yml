@@ -1,0 +1,23 @@
+# == Schema Information
+#
+# Table name: recipe_boxes
+#
+#  id         :integer          not null, primary key
+#  name       :string(255)
+#  recipe_id  :integer
+#  user_id    :integer
+#  created_at :datetime
+#  updated_at :datetime
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  name: MyString
+  recipe_id: 1
+  user_id: 1
+
+two:
+  name: MyString
+  recipe_id: 1
+  user_id: 1

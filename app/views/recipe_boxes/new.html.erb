@@ -1,0 +1,32 @@
+<div class="page-center">
+	<h1>Save to Recipe Box</h1>
+	
+	<p>Save to New Recipe Box</p>
+	
+	<%= form_tag recipe_boxes_new_box_path do %>
+	  
+	  <%= text_field_tag :name %>
+	  <%= hidden_field_tag :recipe_id, @recipe_id %>
+	
+	  <%= submit_tag("Save") %>
+	
+	<% end %>
+	
+	<p>OR</p>
+	
+	<p>Save to Existing Recipe Box: </p>
+	
+		<%= form_tag add_to_recipe_box_path do  %>
+		<%= hidden_field_tag :recipe_id, @recipe_id  %>
+		<%= select_tag :recipe_box, options_from_collection_for_select(@user_recipe_boxes, :id, :name) %>
+	
+		<button>Save</button>
+	
+	<% end %>
+	
+	
+	<p><%= link_to 'Back', :back  %></p>
+</div>
+
+
+

@@ -1,0 +1,87 @@
+
+<div class="blue">
+	<% if logged_in? %>
+
+
+
+
+	<div id="recipe-photo" class="pull-right">
+		<img src=<%= @recipe['images'].first['hostedLargeUrl'] %> >
+	</div>
+
+
+
+
+	<!-- Name & Source -->
+	<h1><%= @recipe['name']  %></h1>
+	<p id="recipe-source"><%= @recipe['source']['sourceDisplayName']  %></p>
+		<% if current_user.recipes.where('yummly_id' => @recipe_id).empty? %>
+			<p><%= link_to 'Save Recipe', save_recipe_path(@recipe['id'])  %></p>
+		<% else %>
+			<p>Recipe already saved</p>
+		<% end %>
+
+	<% else %>
+
+		<p>You need to <%= link_to 'login', new_session_path  %> to save recipes</p>
+
+	<% end %>
+
+</div>	
+
+	<div class="cream">
+		<p>Cook time: <%= @recipe['totalTimeInSeconds'].to_i / 60 %> minutes</p>
+		<p>Serving size: <%= @recipe['numberOfServings']  %></p>
+		<p>Course: <% if @recipe['attributes']['course'] == nil %>
+									---
+								<% else %>
+									<%= @recipe['attributes']['course'].first %>
+								<% end %>
+		</p>
+	</div>
+
+
+
+<div class="blue_bottom">
+	<p>Ingredients: </p>
+	<ul>
+		<% @recipe['ingredientLines'].each do |ingredient|  %>
+			<li><%= ingredient %></li>
+		<% end %>
+	</ul>
+
+	<% if logged_in? %>
+		<p><%= link_to 'Generate Shopping List', shopping_list_path(:ingredients => @recipe['ingredientLines'])%></p>
+	<% else %>
+		<p>You need to <%= link_to 'login', new_session_path  %> to generate recipe list</p>
+	<% end %>
+
+	<p>Rating: <%= @recipe['rating']  %></p>
+
+	<p>NOTES:</p>
+	<% if logged_in? %>
+
+		<% if current_user.recipes.where('yummly_id' => @recipe_id).empty? %>
+			<p> You need to <%= link_to 'save this recipe', save_recipe_path(@recipe['id'])  %> to add notes</p>
+		<% else %>
+			<% if @current_recipe.notes == nil %>
+				<p>No notes</p>
+				<p><%= link_to 'Add Note', recipe_add_note_path(:recipe_id => @recipe['id'])%></p>
+			<% else %>
+				<p><%= @current_recipe.notes  %></p>
+				<p><%= link_to 'Edit Note', recipe_edit_note_path(:recipe_id => @recipe['id'])  %></p>
+			<% end %>
+		<% end %>
+
+	<% else %>
+		<p>You need to <%= link_to 'login', new_session_path  %> to add/view notes</p>
+	<% end %>
+
+</div>
+
+<button type="button" class="btn btn-default" id="just-buttons"><%= link_to "Check out the #{@recipe['source']['sourceDisplayName']} website for full recipe", display_external_path(:id => @recipe['id']) %></button>
+
+	
+
+
+

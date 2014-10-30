@@ -1,0 +1,30 @@
+
+<div class="jumbotron">
+
+	<div class="container">
+		<h1>STUCK FOR RECIPE IDEAS?</h1>
+		<p>Check your fridge or pantry, enter up to 5 ingredients below, </p>
+		<p>and we'll find recipes using those ingredients.</p>
+
+		<h5>I have:</h5>
+		<%= form_tag search_path, :method => 'get' do %>
+		  <%= text_field_tag :ingredient1 %> <br>
+		  <%= text_field_tag :ingredient2 %> <br>
+		  <%= text_field_tag :ingredient3 %> <br>
+		  <%= text_field_tag :ingredient4 %> <br>
+		  <%= text_field_tag :ingredient5 %> <br>
+
+			<%= label_tag :allergy, "Any allergies?" %> <br>
+		 	<%= collection_check_boxes :user, :allergy, Allergy.all, :api_request, :allergy_name  %> <br>
+
+		  <%= submit_tag "Search for Recipes", class: "submit" %>
+		<% end %>
+
+	</div>
+</div>
+
+
+
+
+
+
