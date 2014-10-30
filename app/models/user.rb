@@ -15,7 +15,9 @@ class User < ActiveRecord::Base
 	has_many :recipe_boxes
 	has_many :recipes, through: :recipe_boxes
 
-	validates :name, :uniqueness => true
+	validates :name, :presence => true, :uniqueness => true, length: { minimum: 3,
+    too_short: "Username needs to be more than 3 characters." }
 	validates_confirmation_of :password
+
 
 end

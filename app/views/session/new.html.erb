@@ -1,5 +1,9 @@
 <div class="page-center">
-	<h1>login</h1>
+
+
+
+
+	<h1>Login</h1>
 	
 	<%= form_tag session_index_path do  %>
 	
@@ -15,4 +19,9 @@
 	
 		<button>Submit</button>
 	
-	<% end %></div>
+	<% end %>
+
+		<p><%= flash[:notice]  %></p>
+
+
+	</div>
