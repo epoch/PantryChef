@@ -12,8 +12,13 @@
 		<%= link_to recipe.name, recipe_path(recipe.yummly_id)  %>
 	
 	<% end %>
-	
-	<p><%= link_to 'Back to Search Page', root_path %></p>
+	<br>
+
+
+<div class="btn-bottom">
+	<button class="btn btn-default"><%= link_to 'Back to Search Page', root_path %></button>
+	<button class="btn btn-default"><%= link_to 'See All Saved Recipes', recipe_boxes_path %></button>
+</div>
 
 
 

@@ -10,10 +10,14 @@
 	
 		<% current_user.recipe_boxes.each do |recipe_box| %>
 			
-			<p><%= recipe_box.name %></p>
+			<h3><%= link_to recipe_box.name, recipe_box_path(recipe_box.id) %></h3>
 			<ul>
 				<% recipe_box.recipes.each do |recipe|%>
-					<li> <%= link_to recipe.name, recipe_path(recipe.yummly_id)%></li>
+
+					<li> 
+						<img src = <%= recipe_box.recipes.first.image_url %> > 
+						<%= link_to recipe.name, recipe_path(recipe.yummly_id)%>
+					</li>
 				<% end %>
 			</ul>
 		
@@ -22,5 +26,7 @@
 	<% end %>
 
 </div>
+
+
 
 
