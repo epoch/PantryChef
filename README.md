@@ -51,6 +51,7 @@
 -added allergy parameters <br>
 -Bootstrap and CSS<br>
 -validations<br>
+-CRUD on Recipe Boxes<br>
 
 <h3>Links</h3>
 Github link: https://github.com/jammiii/PantryChef <br>

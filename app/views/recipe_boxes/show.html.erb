@@ -1,10 +1,7 @@
 
 <div class="saved-r">
 
-
-
-
-	<h1><%= @recipe_box.name %> Recipes</h1>
+	<h1><%= @recipe_box.name %> </h1>
 	
 	<% @recipe_box.recipes.each do |recipe|%>
 	
@@ -18,8 +15,9 @@
 <div class="btn-bottom">
 	<button class="btn btn-default"><%= link_to 'Back to Search Page', root_path %></button>
 	<button class="btn btn-default"><%= link_to 'See All Saved Recipes', recipe_boxes_path %></button>
+	<button class="btn btn-default"><%= link_to 'Edit Recipe Box', edit_recipe_box_path(@recipe_box.id)  %></button>
+	<button class="btn btn-default"><%= link_to 'Delete Recipe Box', recipe_box_path(@recipe_box.id), :method => 'delete', :confirm => 'Delete Recipe Box?' %></button>
 </div>
-
 
 
 	

@@ -18,6 +18,7 @@ GaFirstProject::Application.routes.draw do
 
  	get '/search' => 'recipes#search'
 
+
   resources :recipes, :recipe_boxes, :session, :users, :shopping_list
 
 end

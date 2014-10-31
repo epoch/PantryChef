@@ -76,8 +76,44 @@ class RecipeBoxesController < ApplicationController
 	end
 
 
+	def edit
+		@recipe_box = RecipeBox.find(params[:id])
+		
+	end
+
+
+	def update
+		@recipe_box = RecipeBox.find(params[:id])
+		@recipe_box.name = params['name']
+
+
+
+		@delete_recipes = params[:recipe_box][:recipes]
+
+		@delete_recipes.each do |recipe|
+				@recipe_box.recipes.where(:name => recipe ).destroy_all
+
+		end
+
+		@recipe_box.save
+
+		redirect_to recipe_box_path
+
+
+		
+	end
+
+
 	def show
 		@recipe_box = RecipeBox.find(params['id'])
+	end
+
+	def destroy
+		@recipe_box = RecipeBox.find(params[:id])
+		@recipe_box.destroy
+
+		redirect_to recipe_boxes_path
+		
 	end
 
 

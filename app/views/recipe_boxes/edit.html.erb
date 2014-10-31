@@ -1,0 +1,18 @@
+
+<div class="page-center">
+	<h1>Edit Recipe Box</h1>
+	
+	<%= form_tag recipe_box_path, :method => 'patch' do %>
+	  <%= label_tag :name, "Name:"  %>
+	  <%= text_field_tag :name, @recipe_box.name %>
+
+
+		<p>Select Recipe to Delete: </p>
+
+
+<%= collection_check_boxes :recipe_box, :recipes, @recipe_box.recipes, :name, :name %><br>
+
+
+	  <%= submit_tag("Update Recipe Box") %>
+	<% end %>
+</div>
