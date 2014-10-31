@@ -5,8 +5,13 @@
 	
 	<% @recipe_box.recipes.each do |recipe|%>
 	
+		
+		<p>
 		<img src=<%= recipe.image_url  %> >
-		<%= link_to recipe.name, recipe_path(recipe.yummly_id)  %>
+		<%= link_to recipe.name, recipe_path(recipe.yummly_id)  %>:
+		Takes <%= recipe.cooktime %> mins to cook. <%= recipe.rating %> star rating.
+
+		</p>
 	
 	<% end %>
 	<br>
