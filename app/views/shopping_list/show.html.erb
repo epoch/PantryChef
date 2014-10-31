@@ -1,15 +1,17 @@
-<div class="page-center">
+<div class="shopping-page">
 	<h1>My Shopping List</h1>
 	
-	<%= form_tag shopping_list_index_path do  %>
-		<% @ingredients.each do |ingredient|  %>
-			<p>
-				<%= check_box_tag ingredient, ingredient %>
-				<%= label_tag ingredient  %>
-			</p>
+	<div class="shopping-list">
+		<%= form_tag shopping_list_index_path do  %>
+			<% @ingredients.each do |ingredient|  %>
+				<p>
+					<%= check_box_tag ingredient, ingredient %>
+					<%= label_tag ingredient  %>
+				</p>
+			<% end %>
 		<% end %>
-	<% end %>
+	</div>
 	
-	<button><%=link_to_function("Print Shopping List", "javascript:print()")%></button>
+	<button id="shop-list-btn"><%=link_to_function("Print Shopping List", "javascript:print()")%></button>
 </div>
 

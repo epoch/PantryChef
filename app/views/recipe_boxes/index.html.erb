@@ -1,16 +1,24 @@
 <div class="saved-recipes">
 
 <h1>Your Saved Recipes</h1>
+
+	<% if current_user.recipe_boxes.empty? %>
+		<p> You have no saved recipes. </p>
+		<p> <%= link_to "Search", root_path  %> for recipes to add!</p>
+
+	<% else %>
 	
-	<% current_user.recipe_boxes.each do |recipe_box| %>
+		<% current_user.recipe_boxes.each do |recipe_box| %>
+			
+			<p><%= recipe_box.name %></p>
+			<ul>
+				<% recipe_box.recipes.each do |recipe|%>
+					<li> <%= link_to recipe.name, recipe_path(recipe.yummly_id)%></li>
+				<% end %>
+			</ul>
 		
-		<p><%= recipe_box.name %></p>
-		<ul>
-			<% recipe_box.recipes.each do |recipe|%>
-				<li> <%= link_to recipe.name, recipe_path(recipe.yummly_id)%></li>
-			<% end %>
-		</ul>
-	
+		<% end %>
+
 	<% end %>
 
 </div>

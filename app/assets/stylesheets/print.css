@@ -1,0 +1,13 @@
+@media print {
+
+.shopping-page {
+	margin-left: 10%;
+}
+
+#shop-list-btn {
+	display: none;
+}
+
+
+}
+
