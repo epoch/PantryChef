@@ -53,5 +53,5 @@ Thurs 30/10/14
 -validations
 
 
-Github link: https://github.com/jammiii/wdi_local_files/tree/master/first_project/ga_first_project
-Heroku link: http://pantrychefproj.herokuapp.com/
+Github link: https://github.com/jammiii/PantryChef
+Heroku link: http: //pantrychefproj.herokuapp.com/
