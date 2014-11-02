@@ -10,7 +10,8 @@ class ExternalController < ApplicationController
 	end
 
 
-	private
+private
+
 	def allow_iframe
   response.headers['X-Frame-Options'] = "ALLOWALL"
 	end

@@ -8,6 +8,8 @@ class RecipesController < ApplicationController
 	end
 
 	def new
+		# save this page's url to return to after login
+		session[:prev_url] = request.fullpath
 	end
 
 	def search
@@ -44,11 +46,13 @@ class RecipesController < ApplicationController
 	def show
 		@recipe_id = params['id']
 		@recipe = HTTParty.get("http://api.yummly.com/v1/api/recipe/#{@recipe_id}?_app_id=8bf9c732&&_app_key=b14d7c43eeb5c83d0c62bcfebc042431")
-		@external_url = @recipe['source']['sourceRecipeUrl']
 
 		if logged_in? 
-			@current_recipe = current_user.recipes.find_by('yummly_id' => @recipe_id)
+			@selected_recipe = selected_recipe(current_user)
 		end
+
+	# save this page's url to return to after login
+		session[:prev_url] = request.fullpath
 	end
 
 
@@ -59,9 +63,7 @@ class RecipesController < ApplicationController
 
 	def create_note
 		@recipe_id = params['recipe_id']
-		selected_recipe = current_user.recipes.find_by('yummly_id' => @recipe_id)
-		selected_recipe.notes = params['notes']
-		selected_recipe.save
+		selected_recipe_notes(current_user)
 
 		redirect_to recipe_path(@recipe_id)
 	end
@@ -69,17 +71,31 @@ class RecipesController < ApplicationController
 
 	def edit_note
 		@recipe_id = params['recipe_id']
-		@selected_recipe = current_user.recipes.find_by('yummly_id' => @recipe_id)	
+		@selected_recipe = selected_recipe(current_user)
 	end
 
 
 	def update_note
-		recipe_id = params['recipe_id']
-		selected_recipe = current_user.recipes.find_by('yummly_id' => recipe_id)
-		selected_recipe.notes = params['notes']
-		selected_recipe.save
+		@recipe_id = params['recipe_id']
+		selected_recipe_notes(current_user)
+
 		redirect_to recipe_path(recipe_id)
 	end
+
+
+
+private
+
+	def selected_recipe(current_user)
+		current_user.recipes.find_by('yummly_id' => @recipe_id)	
+	end
+
+	def selected_recipe_notes(current_user)
+		selected_recipe = current_user.recipes.find_by('yummly_id' => @recipe_id)
+		selected_recipe.notes = params['notes']
+		selected_recipe.save	
+	end
+
 
 
 	
