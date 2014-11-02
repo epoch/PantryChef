@@ -15,13 +15,76 @@
 		  <%= text_field_tag :ingredient5 %> <br>
 
 			<%= label_tag :allergy, "Any allergies?" %> <br>
-		 	<%= collection_check_boxes :user, :allergy, Allergy.all, :api_request, :allergy_name  %> <br>
+	 		<%= collection_check_boxes :user, :allergy, Allergy.all, :allergy_name, :allergy_name  %> <br>
+			<%= hidden_field_tag :start_at, 0  %>
 
 		  <%= submit_tag "Search for Recipes", class: "submit" %>
 		<% end %>
 
 	</div>
 </div>
+
+<% if @matches != nil %>
+<div class="page-header">
+	<p>Recipes that use: <%= @ingredients.join(', ') %></p>
+
+	<p><% if @allergy_list != nil %> Diet: <%= @allergy_list.join(', ') %> <% end %></p>
+</div>
+
+<div class="container" id="matches">
+	<% if @total_match_count == 0 %>
+		<p> No Matches Found. <%= link_to 'Search', root_path  %> again?</p>
+	<% else %>
+
+		<% @matches.each do |recipe|%>
+
+			<div class="col-md-3">
+			  <div class="thumbnail">
+					<img class="thumbnail" src=<%= recipe['imageUrlsBySize']['90'] %> >
+					<div class="caption">
+
+						<p><%= link_to recipe['recipeName'], recipe_path(recipe['id']), params: recipe['id'] %></p>
+						<p>Source: <%= recipe['sourceDisplayName'] %></p>
+						<p>Rating: <%= recipe['rating']  %>
+							
+						</p>
+						<p>Cook time: <%= recipe["totalTimeInSeconds"].to_i / 60 %> minutes</p>
+						<p>Course: <% if recipe['attributes']['course'] == nil %>
+												---
+											<% else %>
+												<%= recipe['attributes']['course'].first %>
+											<% end %>
+						</p>
+
+						<% @ingredients.each do |user_ing| %>
+							<% @missing = recipe['ingredients'].delete_if {|recipe_ing| recipe_ing.include? user_ing } %>
+						<% end %>
+						
+						<p>You need <%= @missing.length %>  more ingredients <span class="caret"></span></p> 
+						<p id="missing"> <%=  @missing.join(', ') %></p>
+
+						<script>
+						$( "p" ).unbind().on('click','span', function() {
+						  $(this).parent().parent().find( "#missing" ).toggle( "slow" );
+						});
+						</script>
+						
+					</div>
+				</div>
+			</div>	
+		<% end %>
+	<% end %>
+
+</div>
+
+<ul class="pager">
+ <li><a href="">Previous</a></li>
+
+ <li><%= link_to 'Next', search_path(:ingredient1 => @ingredient1, :ingredient2 => @ingredient2, :ingredient3 => @ingredient3, :ingredient4 => @ingredient4, :ingredient5 => @ingredient5, :user => {:allergy => @allergy_list}, :start_at => @start)  %> </li>
+</ul>
+
+
+<% end %>
 
 
 

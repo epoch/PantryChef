@@ -56,8 +56,6 @@ class RecipeBoxesController < ApplicationController
 		@recipe_box = RecipeBox.find(params[:id])
 		@recipe_box.name = params['name']
 
-
-
 		@delete_recipes = params[:recipe_box][:recipes]
 
 		@delete_recipes.each do |recipe|
@@ -85,6 +83,10 @@ class RecipeBoxesController < ApplicationController
 		redirect_to recipe_boxes_path
 		
 	end
+
+	
+
+private
 
 	def new_recipe(recipe)
 

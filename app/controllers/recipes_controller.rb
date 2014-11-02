@@ -8,37 +8,57 @@ class RecipesController < ApplicationController
 	end
 
 	def new
+		@matches = params[@matches]
+		@allergy_list = Allergy.all
 		# save this page's url to return to after login
 		session[:prev_url] = request.fullpath
+
 	end
 
 	def search
 		
-		@ingredients = []
-		@ingredients << params[:ingredient1]
-		@ingredients << params[:ingredient2]
-		@ingredients << params[:ingredient3] 
-		@ingredients << params[:ingredient4] 
-		@ingredients << params[:ingredient5] 
+		
+		@ingredient1 = params[:ingredient1]
+		@ingredient2 = params[:ingredient2]
+		@ingredient3 = params[:ingredient3] 
+		@ingredient4 = params[:ingredient4] 
+		@ingredient5 = params[:ingredient5] 
+
+		@ingredients = [@ingredient1,@ingredient2,@ingredient3, @ingredient4, @ingredient5]
 
 		@ingredients = @ingredients.delete_if {|i| i == ""}
 
 		allowedIngredient = @ingredients.map {|i| "&allowedIngredient[]=#{i}"}.join("")
 
-		allowedAllergy = params['user']['allergy'].join
+		if params['user']['allergy'].empty? == false
+		
+			@allergy_list = params['user']['allergy'].delete_if {|a| a == ""}
+			
+			allowedAllergy = @allergy_list.map do |allergy_name|
+							allergy = Allergy.where('allergy_name' => allergy_name)
+							allergy.first.api_request
+							end
+			allowedAllergy = allowedAllergy.join
 
-		@allergy = params['user']['allergy']
-		@allergy.delete_if {|a| a == ""}
-		@allergy = @allergy.map {|a| a[22..-1]}.join(", ")
+		end
 
 
-		url = URI.encode("http://api.yummly.com/v1/api/recipes?_app_id=8bf9c732&_app_key=b14d7c43eeb5c83d0c62bcfebc042431#{allowedIngredient}#{allowedAllergy}&requirePictures=true&maxResult=12")
+			@start = params[:start_at].to_i + 12
+			start_api = "&start=#{@start}"
+	
+
+
+
+		url = URI.encode("http://api.yummly.com/v1/api/recipes?_app_id=8bf9c732&_app_key=b14d7c43eeb5c83d0c62bcfebc042431#{allowedIngredient}#{allowedAllergy}&requirePictures=true&maxResult=12#{start_api}")
+
+
 		@response = HTTParty.get(url)
+
 		@matches = @response['matches']
 
 		@total_match_count = @response['totalMatchCount']
 		
-		render :index
+		render :new
 		
 	end
 
