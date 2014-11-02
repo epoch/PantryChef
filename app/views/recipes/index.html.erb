@@ -14,6 +14,7 @@
 			  <div class="thumbnail">
 					<img class="thumbnail" src=<%= recipe['imageUrlsBySize']['90'] %> >
 					<div class="caption">
+
 						<p><%= link_to recipe['recipeName'], recipe_path(recipe['id']), params: recipe['id'] %></p>
 						<p>Source: <%= recipe['sourceDisplayName'] %></p>
 						<p>Rating: <%= recipe['rating']  %>
