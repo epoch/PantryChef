@@ -1,4 +1,5 @@
 
+
 <div class="jumbotron">
 
 	<div class="container">
@@ -18,17 +19,28 @@
 	 		<%= collection_check_boxes :user, :allergy, Allergy.all, :allergy_name, :allergy_name  %> <br>
 			<%= hidden_field_tag :start_at, 0  %>
 
-		  <%= submit_tag "Search for Recipes", class: "submit" %>
+		  <%= submit_tag "Search for Recipes", class: "submit", id: 'submit' %>
 		<% end %>
 
 	</div>
 </div>
 
+
 <% if @matches != nil %>
-<div class="page-header">
+<div class="page-header" id="page-header">
 	<p>Recipes that use: <%= @ingredients.join(', ') %></p>
 
-	<p><% if @allergy_list != nil %> Diet: <%= @allergy_list.join(', ') %> <% end %></p>
+	<p><% if @allergy_list != "" && @allergy_list != nil %> 
+					Dietary Restrictions: <%= @allergy_list.join(', ') %> 
+			<% else %>
+					Dietary Restrictions: none  
+			<% end %></p>
+
+	<script>
+	$(document).ready(function() {
+		$('body').animate({scrollTop:650}, 500);
+	});
+	</script>
 </div>
 
 <div class="container" id="matches">
@@ -65,7 +77,7 @@
 
 						<script>
 						$( "p" ).unbind().on('click','span', function() {
-						  $(this).parent().parent().find( "#missing" ).toggle( "slow" );
+						  $(this).parent().parent().find( "#missing" ).slideToggle( "slow" );
 						});
 						</script>
 						
@@ -74,13 +86,20 @@
 			</div>	
 		<% end %>
 	<% end %>
-
 </div>
 
-<ul class="pager">
- <li><a href="">Previous</a></li>
+<ul class="pager"> 
+	<% if @start != '0' %>
 
- <li><%= link_to 'Next', search_path(:ingredient1 => @ingredient1, :ingredient2 => @ingredient2, :ingredient3 => @ingredient3, :ingredient4 => @ingredient4, :ingredient5 => @ingredient5, :user => {:allergy => @allergy_list}, :start_at => @start)  %> </li>
+		<li><%= link_to 'Previous', search_path(:ingredient1 => @ingredient1, :ingredient2 => @ingredient2, :ingredient3 => @ingredient3, :ingredient4 => @ingredient4, :ingredient5 => @ingredient5, :user => {:allergy => @allergy_list}, :start_at => @start, :prev => 'y')  %></li>
+
+		 <li><%= link_to 'Next', search_path(:ingredient1 => @ingredient1, :ingredient2 => @ingredient2, :ingredient3 => @ingredient3, :ingredient4 => @ingredient4, :ingredient5 => @ingredient5, :user => {:allergy => @allergy_list}, :start_at => @start, :next => 'y')  %> 
+		 </li>
+
+	<% else %>
+
+		 <li><%= link_to 'Next', search_path(:ingredient1 => @ingredient1, :ingredient2 => @ingredient2, :ingredient3 => @ingredient3, :ingredient4 => @ingredient4, :ingredient5 => @ingredient5, :user => {:allergy => @allergy_list}, :start_at => @start, :next => 'y')  %> </li>
+	 <% end %>
 </ul>
 
 

@@ -8,10 +8,10 @@ class RecipesController < ApplicationController
 	end
 
 	def new
-		@matches = params[@matches]
-		@allergy_list = Allergy.all
+		@matches = params[@matches]	
+
 		# save this page's url to return to after login
-		session[:prev_url] = request.fullpath
+		session[:prev_url] = request.fullpath  
 
 	end
 
@@ -31,6 +31,10 @@ class RecipesController < ApplicationController
 		allowedIngredient = @ingredients.map {|i| "&allowedIngredient[]=#{i}"}.join("")
 
 		if params['user']['allergy'].empty? == false
+
+			if params['user']['allergy'].join == ""
+				@allergy_list = ""
+			else
 		
 			@allergy_list = params['user']['allergy'].delete_if {|a| a == ""}
 			
@@ -39,11 +43,17 @@ class RecipesController < ApplicationController
 							allergy.first.api_request
 							end
 			allowedAllergy = allowedAllergy.join
+			end
 
 		end
+			if params.include?('prev')
+				@start = params[:start_at].to_i - 12
+			elsif params.include?('next')
+				@start = params[:start_at].to_i + 12
+			else
+				@start = params[:start_at]
+			end
 
-
-			@start = params[:start_at].to_i + 12
 			start_api = "&start=#{@start}"
 	
 

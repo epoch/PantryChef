@@ -21,9 +21,9 @@ module GaFirstProject
     # config.i18n.default_locale = :de
 
 
-config.action_dispatch.default_headers = {
-    'X-Frame-Options' => 'ALLOWALL'
-}
+    config.action_dispatch.default_headers = {
+        'X-Frame-Options' => 'ALLOWALL'
+    }
     
   end
 end
