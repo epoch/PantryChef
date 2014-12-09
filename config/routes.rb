@@ -21,4 +21,13 @@ GaFirstProject::Application.routes.draw do
 
   resources :recipes, :recipe_boxes, :session, :users, :shopping_list
 
+  namespace :api do
+  	namespace :v1 do 
+  		resources :users
+
+  		get '/user/:id/recipes' => 'users#recipes'
+  		get '/user/:id/recipe_boxes' => 'users#recipe_boxes'
+  	end
+  end
+
 end
